@@ -7,6 +7,7 @@ using v2rayN.HttpProxyHandler;
 using v2rayN.Mode;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 
 namespace v2rayN.Forms
 {
@@ -678,6 +679,32 @@ namespace v2rayN.Forms
                 LoadV2ray();
             }
             ShowForm();
+        }
+
+        private void addVMessServersFromRyougichan_Click(object sender, EventArgs e)
+        {
+            HttpWebRequest request = WebRequest.Create("https://baidu.com") as HttpWebRequest;
+            request.Method = "GET";
+
+            string links = string.Empty;
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            {
+                links = reader.ReadToEnd();
+            }
+
+            // links = "[\"vmess://eyJhZGQiOiJ2MnVzMDEuaXN4YS50b3AiLCJob3N0IjoiIiwiaWQiOiJlMTU3Y2UyNi0wY2QxLTQ0NmUtOWVjNy1lMzM0M2M2YTM1MmEiLCJuZXQiOiJ3cyIsInBhdGgiOiJcL3JheSIsInBvcnQiOiI0NDMiLCJwcyI6ImlzeC55dC0wMSIsInRscyI6InRscyIsInYiOjIsImFpZCI6NjQsInR5cGUiOiJub25lIn0K\",\"vmess://eyJhZGQiOiJ2MnVzMDIuaXN4YS50b3AiLCJob3N0IjoiIiwiaWQiOiI4ZDhhYmFmYy1jYzEzLTQ2MGItOWNkNC0xYmM3ODExNGU2M2UiLCJuZXQiOiJ3cyIsInBhdGgiOiJcL3JheSIsInBvcnQiOiI0NDMiLCJwcyI6ImlzeC55dC0wMiIsInRscyI6InRscyIsInYiOjIsImFpZCI6NjQsInR5cGUiOiJub25lIn0K\",\"vmess://eyJhZGQiOiJ2MnVzMDMuaXN4YS50b3AiLCJob3N0IjoiIiwiaWQiOiI4YWI5ZGYyZC02Zjc1LTQxOTEtYmNhNy0xZjQwYTA1NWE2N2QiLCJuZXQiOiJ3cyIsInBhdGgiOiJcL3JheSIsInBvcnQiOiI0NDMiLCJwcyI6ImlzeC55dC0wMyIsInRscyI6InRscyIsInYiOjIsImFpZCI6NjQsInR5cGUiOiJub25lIn0K\"]";
+            string[] vmesss = links.Replace("[", "").Replace("]", "").Replace("\"", "").Split(',');
+            int count = 0;
+            foreach(string vmess in vmesss)
+            {
+                if (AddBatchServers(vmess.Trim()) == 0)
+                {
+                    count++;
+                }
+            }
+            UI.Show(string.Format(UIRes.I18N("ImportedResultCountNotice"), count, vmesss.Length - count));
         }
 
         private void menuAddServers_Click(object sender, EventArgs e)
@@ -1373,6 +1400,5 @@ namespace v2rayN.Forms
         }
 
         #endregion
-
     }
 }

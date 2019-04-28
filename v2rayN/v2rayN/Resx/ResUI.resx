@@ -319,4 +319,7 @@
   <data name="MsgUpdateV2rayCoreSuccessfullyMore" xml:space="preserve">
     <value>Update V2rayCore successfully! Restarting service...</value>
   </data>
+  <data name="ImportedResultCountNotice" xml:space="preserve">
+    <value>Import {0} successfully, {1} failed</value>
+  </data>
 </root>

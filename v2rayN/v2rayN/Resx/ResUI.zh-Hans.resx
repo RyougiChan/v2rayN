@@ -319,4 +319,7 @@
   <data name="MsgUpdateV2rayCoreSuccessfullyMore" xml:space="preserve">
     <value>更新V2rayCore成功！正在重启服务...</value>
   </data>
+  <data name="ImportedResultCountNotice" xml:space="preserve">
+    <value>导入成功 {0} 个，失败 {1} 个</value>
+  </data>
 </root>
